@@ -1,0 +1,78 @@
+const mongoose = require('mongoose');
+const user = require('../Models/user');
+
+
+module.exports = (Router) => {
+    Router.post("/register", (req, res) => {
+        if (!req.body.email) {
+            res.json({ success: false, message: "Email-Id is Empty" });
+        }
+        else {
+            if (!req.body.username) {
+                res.json({ success: false, message: "Username is Empty" });
+            }
+            else {
+                if (!req.body.gender) {
+                    res.json({ success: false, message: "Gender is Empty" });
+                }
+                else {
+                    if (!req.body.state) {
+                        res.json({ success: false, message: "State is Empty" });
+                    }
+                    else {
+                        if (!req.body.city) {
+                            res.json({ success: false, message: "City is Empty" });
+                        }
+                        else {
+                            if (!req.body.mobile) {
+                                res.json({ success: false, message: "mobile is Empty" });
+                            }
+                            else {
+                                if (!req.body.DOB) {
+                                    res.json({ success: false, message: "DOB is Empty" });
+                                }
+                                else {
+                                    if(!req.body.password)
+                                    {
+                                        res.json({ success: false, message: "Password is Empty" });
+                                    }
+                                    else{
+                                        let People=new user(
+                                            {
+                                                email: req.body.email,
+                                                username:req.body.username,
+                                                gender: req.body.gender,
+                                                state: req.body.state,
+                                                city: req.body.city,
+                                               mobile: req.body.mobile,
+                                                DOB: req.body.DOB,
+                                                password: req.body.password,
+                                            }
+                                           
+                                      );
+                                      console.log(People);
+
+                                      People.save((err)=>
+                                      {
+                                        if (err) {
+                                            res.json({ success: false, message: 'UserName or Email already exits !!' });
+                                            console.log(err);
+                                        }
+                                        else
+                                        {
+                                            res.json({success : true , message : "User Saved !!"});
+                                        }
+                                      
+                                  });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+}});
+    return Router;
+
+}
+
